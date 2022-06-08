@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
@@ -14,7 +19,25 @@ export class AuthService {
   ) {}
 
   // Обработчик авторизация пользователя в магазине
-  async login(userDto: CreateUserDto) {}
+  async login(userDto: CreateUserDto) {
+    const user = await this.validateUser(userDto);
+    return this.generatorToken(user);
+  }
+  private async validateUser(userDto: CreateUserDto) {
+    // Получаем реквизиты пользователя из базы данных
+    const user = await this.userSevice.getUserByEmail(userDto.email);
+    // Проверяем пароль пользователя на валидность
+    const passwordValid = await bcrypt.compare(
+      userDto.password,
+      user?.password || '',
+    );
+    if (user && passwordValid) {
+      return user;
+    }
+    throw new UnauthorizedException({
+      message: 'Некоректный емайл или пароль',
+    });
+  }
   // Обработчик регистрация ползователя в магазине
   async registration(userDto: CreateUserDto) {
     // Проверяем, есть ли такоей пользователь в базе
