@@ -49,6 +49,9 @@ export class UsersService {
   async banUser(dto: BannedUserDto) {
     // Получаем пользователя из БД по id
     const user = await this.userRepository.findByPk(dto.userId);
+    if (!user) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
     user.banned = true;
     user.banReason = dto.banReason;
     user.save();
