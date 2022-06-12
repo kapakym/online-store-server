@@ -7,10 +7,21 @@ import { User } from './users/users.model';
 import { Role } from './roles/roles.model';
 import { UserRoles } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
+import { BasketModule } from './basket/basket.module';
+import { BasketProductController } from './basket-product/basket-product.controller';
+import { BasketProductModule } from './basket-product/basket-product.module';
+import { ProductTypeModule } from './product-type/product-type.module';
+import { ProductBrandController } from './product-brand/product-brand.controller';
+import { ProductBrandModule } from './product-brand/product-brand.module';
+import { ProductRaitingService } from './product-raiting/product-raiting.service';
+import { ProductRaitingModule } from './product-raiting/product-raiting.module';
+import { ProductPropertyController } from './product-property/product-property.controller';
+import { ProductPropertyModule } from './product-property/product-property.module';
 
 @Module({
-  controllers: [],
-  providers: [],
+  controllers: [BasketProductController, ProductBrandController, ProductPropertyController],
+  providers: [ProductRaitingService],
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -28,6 +39,13 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     RolesModule,
     AuthModule,
+    ProductsModule,
+    BasketModule,
+    BasketProductModule,
+    ProductTypeModule,
+    ProductBrandModule,
+    ProductRaitingModule,
+    ProductPropertyModule,
   ],
 })
 export class AppModule {}

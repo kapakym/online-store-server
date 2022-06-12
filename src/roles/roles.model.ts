@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { STRING } from 'sequelize';
 import {
+  BelongsTo,
   BelongsToMany,
   Column,
   DataType,
@@ -43,4 +44,6 @@ export class Role extends Model<Role, RoleCtreationAttrs> {
 
   @BelongsToMany(() => User, () => UserRoles)
   users: User[];
+
+ 
 }
