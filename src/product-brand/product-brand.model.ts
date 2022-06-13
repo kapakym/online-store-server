@@ -9,12 +9,14 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
+import { ProductType } from 'src/product-type/product-type.model';
+import { Products } from 'src/products/products.model';
 
 // interface ProductTypeCtreationAttrs {
 //   name: string;
 // }
 
-@Table({ tableName: 'basket' })
+@Table({ tableName: 'product_brand' })
 export class ProductBrand extends Model<ProductBrand> {
   @ApiProperty({ example: '1', description: 'Уникальный индетификатор' })
   @Column({
@@ -31,4 +33,7 @@ export class ProductBrand extends Model<ProductBrand> {
   })
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   name: string;
+
+  @HasMany(() => Products)
+  products: Products;
 }

@@ -18,9 +18,20 @@ import { ProductRaitingService } from './product-raiting/product-raiting.service
 import { ProductRaitingModule } from './product-raiting/product-raiting.module';
 import { ProductPropertyController } from './product-property/product-property.controller';
 import { ProductPropertyModule } from './product-property/product-property.module';
+import { Basket } from './basket/basket.model';
+import { ProductBrand } from './product-brand/product-brand.model';
+import { ProductType } from './product-type/product-type.model';
+import { ProductRaiting } from './product-raiting/product-raiting.model';
+import { BasketProduct } from './basket-product/basket-product.model';
+import { Products } from './products/products.model';
+import { ProductProperty } from './product-property/product-property.model';
 
 @Module({
-  controllers: [BasketProductController, ProductBrandController, ProductPropertyController],
+  controllers: [
+    BasketProductController,
+    ProductBrandController,
+    ProductPropertyController,
+  ],
   providers: [ProductRaitingService],
   imports: [
     ConfigModule.forRoot({
@@ -33,7 +44,18 @@ import { ProductPropertyModule } from './product-property/product-property.modul
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles],
+      models: [
+        User,
+        Role,
+        UserRoles,
+        Basket,
+        ProductBrand,
+        ProductType,
+        ProductRaiting,
+        BasketProduct,
+        Products,
+        ProductProperty,
+      ],
       autoLoadModels: true,
     }),
     UsersModule,

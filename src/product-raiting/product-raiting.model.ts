@@ -5,10 +5,13 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
+import { Products } from 'src/products/products.model';
+import { User } from 'src/users/users.model';
 
 // interface ProductTypeCtreationAttrs {
 //   name: string;
@@ -31,4 +34,18 @@ export class ProductRaiting extends Model<ProductRaiting> {
   })
   @Column({ type: DataType.INTEGER, allowNull: false })
   rate: number;
+
+  @ForeignKey(() => User)
+  @Column({ type: DataType.INTEGER })
+  userId: Number;
+
+  @ForeignKey(() => Products)
+  @Column({ type: DataType.INTEGER })
+  productsId: Number;
+
+  @BelongsTo(() => User)
+  user: User;
+
+  @BelongsTo(() => Products)
+  products: Products;
 }

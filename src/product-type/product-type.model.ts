@@ -10,6 +10,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Col } from 'sequelize/types/utils';
+import { ProductBrand } from 'src/product-brand/product-brand.model';
 import { Products } from 'src/products/products.model';
 import { User } from 'src/users/users.model';
 
@@ -17,7 +18,7 @@ interface ProductTypeCtreationAttrs {
   name: string;
 }
 
-@Table({ tableName: 'productType' })
+@Table({ tableName: 'product_type' })
 export class ProductType extends Model<ProductType, ProductTypeCtreationAttrs> {
   @ApiProperty({ example: '1', description: 'Уникальный индетификатор' })
   @Column({
@@ -36,5 +37,8 @@ export class ProductType extends Model<ProductType, ProductTypeCtreationAttrs> {
   name: string;
 
   @HasMany(() => Products)
-  product: Products;
+  products: Products;
+
+  //   @BelongsToMany(() => ProductBrand, 'TypeBrand')
+  //   productBrand: ProductBrand;
 }

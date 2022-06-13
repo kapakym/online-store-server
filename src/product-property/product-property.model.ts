@@ -5,16 +5,18 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
+import { Products } from 'src/products/products.model';
 
 // interface ProductTypeCtreationAttrs {
 //   name: string;
 // }
 
-@Table({ tableName: 'product_raiting' })
+@Table({ tableName: 'product_property' })
 export class ProductProperty extends Model<ProductProperty> {
   @ApiProperty({ example: '1', description: 'Уникальный индетификатор' })
   @Column({
@@ -38,4 +40,11 @@ export class ProductProperty extends Model<ProductProperty> {
   })
   @Column({ type: DataType.STRING, allowNull: false })
   description: string;
+
+  @ForeignKey(() => Products)
+  @Column({ type: DataType.INTEGER })
+  productsId: Number;
+
+  @BelongsTo(() => Products)
+  product: Products;
 }

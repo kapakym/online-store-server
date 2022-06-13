@@ -10,15 +10,15 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { Basket } from 'src/basket/basket.model';
-import { Products } from 'src/products/products.model';
+import { ProductBrand } from 'src/product-brand/product-brand.model';
+import { ProductType } from './product-type.model';
 
 // interface ProductTypeCtreationAttrs {
 //   name: string;
 // }
 
-@Table({ tableName: 'basketProduct' })
-export class BasketProduct extends Model<BasketProduct> {
+@Table({ tableName: 'brand_type', createdAt: false, updatedAt: false })
+export class TypeBrand extends Model<TypeBrand> {
   @ApiProperty({ example: '1', description: 'Уникальный индетификатор' })
   @Column({
     type: DataType.INTEGER,
@@ -28,17 +28,15 @@ export class BasketProduct extends Model<BasketProduct> {
   })
   id: number;
 
-  @ForeignKey(() => Basket)
-  @Column({ type: DataType.INTEGER })
-  basketId: Number;
+  @ForeignKey(() => ProductType)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  productId: number;
 
-  @ForeignKey(() => Products)
-  @Column({ type: DataType.INTEGER })
-  productsId: Number;
-
-  @BelongsTo(() => Basket)
-  basket: Basket;
-
-  @BelongsTo(() => Products)
-  products: Products;
+  @ForeignKey(() => ProductBrand)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  brandId: number;
 }

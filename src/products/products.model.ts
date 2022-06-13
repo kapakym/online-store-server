@@ -7,8 +7,14 @@ import {
   Table,
   BelongsToMany,
   BelongsTo,
+  HasMany,
+  ForeignKey,
 } from 'sequelize-typescript';
 import { Col } from 'sequelize/types/utils';
+import { BasketProduct } from 'src/basket-product/basket-product.model';
+import { ProductBrand } from 'src/product-brand/product-brand.model';
+import { ProductProperty } from 'src/product-property/product-property.model';
+import { ProductRaiting } from 'src/product-raiting/product-raiting.model';
 import { ProductType } from 'src/product-type/product-type.model';
 import { Role } from 'src/roles/roles.model';
 import { UserRoles } from 'src/roles/user-roles.model';
@@ -46,16 +52,36 @@ export class Products extends Model<Products, ProductsCtreationAttrs> {
     example: '5',
     description: 'Популярность товара',
   })
-  @Column({ type: DataType.INTEGER, defaultValue: false })
+  @Column({ type: DataType.INTEGER, defaultValue: 0 })
   raiting: number;
 
   @ApiProperty({
     example: '[1.png, 2.png, ...]',
     description: 'Причина блокировки пользователя',
   })
-  @Column({ type: DataType.ARRAY, allowNull: true })
+  @Column({ type: DataType.STRING, allowNull: true })
   imageList: string[];
+
+  @ForeignKey(() => ProductType)
+  @Column({ type: DataType.INTEGER })
+  productTypeId: Number;
+
+  @ForeignKey(() => ProductBrand)
+  @Column({ type: DataType.INTEGER })
+  productBrandId: Number;
 
   @BelongsTo(() => ProductType)
   productType: ProductType;
+
+  @BelongsTo(() => ProductBrand)
+  productBrand: ProductBrand;
+
+  @HasMany(() => ProductRaiting)
+  productRaiting: ProductRaiting;
+
+  @HasMany(() => BasketProduct)
+  basketProduct: BasketProduct;
+
+  @HasMany(() => ProductProperty)
+  productProperty: ProductProperty;
 }

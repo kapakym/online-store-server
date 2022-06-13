@@ -5,11 +5,13 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { Col } from 'sequelize/types/utils';
+import { BasketProduct } from 'src/basket-product/basket-product.model';
 import { Products } from 'src/products/products.model';
 import { User } from 'src/users/users.model';
 
@@ -27,4 +29,14 @@ export class Basket extends Model<Basket> {
     primaryKey: true,
   })
   id: number;
+
+  @ForeignKey(() => User)
+  @Column({ type: DataType.INTEGER })
+  userId: Number;
+
+  @BelongsTo(() => User)
+  user: User;
+
+  @HasMany(() => BasketProduct)
+  basketProduct: BasketProduct;
 }

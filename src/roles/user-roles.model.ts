@@ -12,11 +12,6 @@ import { Col } from 'sequelize/types/utils';
 import { User } from 'src/users/users.model';
 import { Role } from './roles.model';
 
-interface RoleCtreationAttrs {
-  value: string;
-  description: string;
-}
-
 @Table({ tableName: 'userroles', createdAt: false, updatedAt: false })
 export class UserRoles extends Model<UserRoles> {
   @Column({
