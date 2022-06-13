@@ -25,6 +25,7 @@ import { ProductRaiting } from './product-raiting/product-raiting.model';
 import { BasketProduct } from './basket-product/basket-product.model';
 import { Products } from './products/products.model';
 import { ProductProperty } from './product-property/product-property.model';
+import { TypeBrand } from './product-type/type-brand.model';
 
 @Module({
   controllers: [
@@ -55,6 +56,7 @@ import { ProductProperty } from './product-property/product-property.model';
         BasketProduct,
         Products,
         ProductProperty,
+        TypeBrand,
       ],
       autoLoadModels: true,
     }),

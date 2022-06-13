@@ -13,6 +13,7 @@ import { Col } from 'sequelize/types/utils';
 import { ProductBrand } from 'src/product-brand/product-brand.model';
 import { Products } from 'src/products/products.model';
 import { User } from 'src/users/users.model';
+import { TypeBrand } from './type-brand.model';
 
 interface ProductTypeCtreationAttrs {
   name: string;
@@ -39,6 +40,6 @@ export class ProductType extends Model<ProductType, ProductTypeCtreationAttrs> {
   @HasMany(() => Products)
   products: Products;
 
-  //   @BelongsToMany(() => ProductBrand, 'TypeBrand')
-  //   productBrand: ProductBrand;
+  @BelongsToMany(() => ProductBrand, () => TypeBrand)
+  productBrand: ProductBrand[];
 }
