@@ -12,26 +12,26 @@ import { BasketModule } from './basket/basket.module';
 import { BasketProductController } from './basket-product/basket-product.controller';
 import { BasketProductModule } from './basket-product/basket-product.module';
 import { ProductTypeModule } from './product-type/product-type.module';
-import { ProductBrandController } from './product-brand/product-brand.controller';
-import { ProductBrandModule } from './product-brand/product-brand.module';
 import { ProductRaitingService } from './product-raiting/product-raiting.service';
 import { ProductRaitingModule } from './product-raiting/product-raiting.module';
 import { ProductPropertyController } from './product-property/product-property.controller';
 import { ProductPropertyModule } from './product-property/product-property.module';
 import { Basket } from './basket/basket.model';
-import { ProductBrand } from './product-brand/product-brand.model';
 import { ProductType } from './product-type/product-type.model';
 import { ProductRaiting } from './product-raiting/product-raiting.model';
 import { BasketProduct } from './basket-product/basket-product.model';
 import { Products } from './products/products.model';
 import { ProductProperty } from './product-property/product-property.model';
 import { TypeBrand } from './product-type/type-brand.model';
+import { ProductBrandController } from './product-brand/product-brand.controller';
+import { ProductBrand } from './product-brand/product-brand.model';
+import { ProductBrandModule } from './product-brand/product-brand.module';
 
 @Module({
   controllers: [
-    BasketProductController,
-    ProductBrandController,
-    ProductPropertyController,
+    // BasketProductController,
+    // ProductBrandController,
+    // ProductPropertyController,
   ],
   providers: [ProductRaitingService],
   imports: [

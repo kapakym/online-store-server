@@ -5,6 +5,7 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   HasMany,
   Model,
   Table,
@@ -37,9 +38,16 @@ export class ProductType extends Model<ProductType, ProductTypeCtreationAttrs> {
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   name: string;
 
+  @ForeignKey(() => ProductType)
+  @Column({ type: DataType.INTEGER })
+  parentId: Number;
+
   @HasMany(() => Products)
   products: Products;
 
-  @BelongsToMany(() => ProductBrand, () => TypeBrand)
-  productBrand: ProductBrand[];
+  @BelongsTo(() => ProductType)
+  productType: ProductType;
+
+  //   @BelongsToMany(() => ProductBrand, () => TypeBrand)
+  //   productBrand: ProductBrand[];
 }

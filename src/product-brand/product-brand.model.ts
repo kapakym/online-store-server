@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { STRING } from 'sequelize';
 import {
   BelongsTo,
   BelongsToMany,

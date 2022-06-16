@@ -8,7 +8,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
   providers: [ProductTypeService],
   controllers: [ProductTypeController],
   imports: [
-    // Репозитории с которыми будем работать
+    // Модель с которой будем работать
     SequelizeModule.forFeature([ProductType]),
   ],
 })

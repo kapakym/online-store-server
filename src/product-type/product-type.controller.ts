@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { ProductType } from './product-type.model';
@@ -16,5 +16,15 @@ export class ProductTypeController {
   @Post()
   create(@Body() productDto: CreateProductTypeDto) {
     return this.serviceProductType.createProductType(productDto);
+  }
+
+  @ApiOperation({ summary: 'Получить все категории товаров' })
+  @ApiResponse({ status: 200, type: [ProductType] })
+  // @UseGuards(JwtAuthGuard)
+  //   @Roles('ADMIN')
+  //   @UseGuards(RolesGuard)
+  @Get()
+  getAll() {
+    return this.serviceProductType.getAllTypes();
   }
 }

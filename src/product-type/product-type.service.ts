@@ -13,4 +13,9 @@ export class ProductTypeService {
     const productType = await this.productTypeRepository.create(dto);
     return productType;
   }
+
+  async getAllTypes() {
+    const types = await this.productTypeRepository.findAll({});
+    return types;
+  }
 }
