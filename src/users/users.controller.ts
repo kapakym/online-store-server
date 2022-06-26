@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   UseGuards,
@@ -14,6 +15,7 @@ import { ValidationPipe } from 'src/pipes/validation.pipe';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BannedUserDto } from './dto/banned-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { DeleteUserDto } from './dto/delete-user.dto';
 import { User } from './users.model';
 
 import { UsersService } from './users.service';
@@ -22,6 +24,15 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
+
+  @ApiOperation({ summary: 'Удаление пользователя' })
+  @ApiResponse({ status: 200, type: User })
+  // @UsePipes(ValidationPipe)
+  @Post('/delete')
+  delete(@Body() userDto: DeleteUserDto) {
+    return this.usersService.deleteUser(userDto);
+  }
+
   @ApiOperation({ summary: 'Создание пользователя' })
   @ApiResponse({ status: 200, type: User })
   @UsePipes(ValidationPipe)
@@ -33,8 +44,8 @@ export class UsersController {
   @ApiOperation({ summary: 'Получение всех пользователей' })
   @ApiResponse({ status: 200, type: [User] })
   // @UseGuards(JwtAuthGuard)
-  @Roles('ADMIN')
-  @UseGuards(RolesGuard)
+  // @Roles('ADMIN')
+  // @UseGuards(RolesGuard)
   @Get()
   getAll() {
     return this.usersService.getAllUsers();

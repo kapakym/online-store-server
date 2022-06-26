@@ -9,6 +9,7 @@ const start = async () => {
   try {
     const PORT = process.env.PORT || 5000;
     const app = await NestFactory.create(AppModule);
+    app.enableCors();
     const config = new DocumentBuilder()
       .setTitle('Онлайн магазин')
       .setDescription('Документация REST API')

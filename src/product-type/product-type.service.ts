@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { ProductType } from './product-type.model';
+import { AnswerProductType } from './types/product-type.types';
 
 @Injectable()
 export class ProductTypeService {
@@ -15,7 +16,16 @@ export class ProductTypeService {
   }
 
   async getAllTypes() {
-    const types = await this.productTypeRepository.findAll({});
-    return types;
+    const types: any = await this.productTypeRepository.findAll({});
+    const answer: AnswerProductType[] = [];
+    types.forEach((element: AnswerProductType) => {
+      answer.push({
+        id: element.id,
+        name: element.name,
+        parentId: element.parentId,
+        picture: element.picture,
+      });
+    });
+    return answer;
   }
 }

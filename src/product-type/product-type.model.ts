@@ -38,9 +38,16 @@ export class ProductType extends Model<ProductType, ProductTypeCtreationAttrs> {
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   name: string;
 
+  @ApiProperty({
+    example: './test.img',
+    description: 'Путь к картинке категории',
+  })
+  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  picture: string;
+
   @ForeignKey(() => ProductType)
   @Column({ type: DataType.INTEGER })
-  parentId: Number;
+  parentId: number;
 
   @HasMany(() => Products)
   products: Products;

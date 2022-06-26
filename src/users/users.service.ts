@@ -5,6 +5,7 @@ import { threadId } from 'worker_threads';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BannedUserDto } from './dto/banned-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { DeleteUserDto } from './dto/delete-user.dto';
 import { User } from './users.model';
 
 @Injectable()
@@ -46,6 +47,7 @@ export class UsersService {
       HttpStatus.NOT_FOUND,
     );
   }
+
   async banUser(dto: BannedUserDto) {
     // Получаем пользователя из БД по id
     const user = await this.userRepository.findByPk(dto.userId);
@@ -55,6 +57,22 @@ export class UsersService {
     user.banned = true;
     user.banReason = dto.banReason;
     user.save();
+    return user;
+  }
+
+  async deleteUser(dto: DeleteUserDto) {
+    // Получаем пользователя из БД по id
+    console.log(dto);
+    const user = await this.userRepository.findByPk(dto.userId);
+
+    if (!user) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
+
+    const statuss = await this.userRepository.destroy({
+      where: { id: dto.userId },
+    });
+    console.log(statuss);
     return user;
   }
 }
