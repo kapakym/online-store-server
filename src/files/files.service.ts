@@ -4,6 +4,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as path from 'path';
 // Модуль для работы с файлами
 import * as fs from 'fs';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class FilesService {
