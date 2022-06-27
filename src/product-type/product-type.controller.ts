@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UploadedFile } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { ProductType } from './product-type.model';
@@ -14,6 +22,7 @@ export class ProductTypeController {
   @ApiResponse({ status: 200, type: ProductType })
   //   @UsePipes(ValidationPipe)
   @Post()
+  @UseInterceptors(FileInterceptor('picture'))
   create(@Body() productDto: CreateProductTypeDto, @UploadedFile() picture) {
     return this.serviceProductType.createProductType(productDto, picture);
   }

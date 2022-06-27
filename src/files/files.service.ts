@@ -19,6 +19,7 @@ export class FilesService {
         fs.mkdirSync(filePath, { recursive: true });
       }
       // Записываем файл на диск
+      console.log(path.join(filePath, fileName));
       fs.writeFileSync(path.join(filePath, fileName), file.buffer);
       // Возращаем название файла
       return fileName;
