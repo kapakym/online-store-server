@@ -26,6 +26,7 @@ import { TypeBrand } from './product-type/type-brand.model';
 import { ProductBrandController } from './product-brand/product-brand.controller';
 import { ProductBrand } from './product-brand/product-brand.model';
 import { ProductBrandModule } from './product-brand/product-brand.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   controllers: [
@@ -70,6 +71,7 @@ import { ProductBrandModule } from './product-brand/product-brand.module';
     ProductBrandModule,
     ProductRaitingModule,
     ProductPropertyModule,
+    FilesModule,
   ],
 })
 export class AppModule {}
