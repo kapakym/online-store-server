@@ -14,7 +14,7 @@ export class ProductTypeService {
   ) {}
 
   async createProductType(dto: CreateProductTypeDto, picture: any) {
-    const filename = this.fileService.createFile(picture);
+    const filename = await this.fileService.createFile(picture);
     const productType = await this.productTypeRepository.create({
       ...dto,
       picture: filename,
