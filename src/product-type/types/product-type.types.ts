@@ -1,8 +1,8 @@
 interface AnswerProductType {
-  id: number;
-  name: string;
-  parentId: number;
-  picture: string;
+  readonly id: number;
+  readonly name: string;
+  readonly parentId: number;
+  readonly picture: string;
 }
 
 export { AnswerProductType };

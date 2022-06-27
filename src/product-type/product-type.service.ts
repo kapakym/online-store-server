@@ -10,8 +10,13 @@ export class ProductTypeService {
   constructor(
     @InjectModel(ProductType) private productTypeRepository: typeof ProductType,
   ) {}
-  async createProductType(dto: CreateProductTypeDto) {
-    const productType = await this.productTypeRepository.create(dto);
+
+  async createProductType(dto: CreateProductTypeDto, picture: any) {
+    const filename = '';
+    const productType = await this.productTypeRepository.create({
+      ...dto,
+      picture: filename,
+    });
     return productType;
   }
 

@@ -18,6 +18,8 @@ import { TypeBrand } from './type-brand.model';
 
 interface ProductTypeCtreationAttrs {
   name: string;
+  parentId: number;
+  picture: string;
 }
 
 @Table({ tableName: 'product_type' })
