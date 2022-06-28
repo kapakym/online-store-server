@@ -19,6 +19,7 @@ export class ProductTypeService {
       ...dto,
       picture: filename,
     });
+    console.log(productType);
     return productType;
   }
 
