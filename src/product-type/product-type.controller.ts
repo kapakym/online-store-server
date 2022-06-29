@@ -9,6 +9,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
+import { DeleteProductTypeDto } from './dto/delete-productType.dto';
 import { ProductType } from './product-type.model';
 import { ProductTypeService } from './product-type.service';
 
@@ -35,5 +36,13 @@ export class ProductTypeController {
   @Get()
   getAll() {
     return this.serviceProductType.getAllTypes();
+  }
+
+  @ApiOperation({ summary: 'Удаление категории товара' })
+  @ApiResponse({ status: 200, type: ProductType })
+  //   @UsePipes(ValidationPipe)
+  @Post('/delete')
+  delete(@Body() productDto: DeleteProductTypeDto) {
+    return this.serviceProductType.deleteProductType(productDto);
   }
 }

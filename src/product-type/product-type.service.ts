@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FilesService } from 'src/files/files.service';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
+import { DeleteProductTypeDto } from './dto/delete-productType.dto';
 import { ProductType } from './product-type.model';
 import { AnswerProductType } from './types/product-type.types';
 
@@ -37,5 +38,11 @@ export class ProductTypeService {
       });
     });
     return answer;
+  }
+
+  async deleteProductType(dto: DeleteProductTypeDto) {
+    const productType = await this.productTypeRepository.findByPk(dto.id);
+    console.log(productType);
+    return productType;
   }
 }
