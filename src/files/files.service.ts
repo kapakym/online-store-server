@@ -8,6 +8,19 @@ import * as uuid from 'uuid';
 
 @Injectable()
 export class FilesService {
+  async removeFile(filename): Promise<string> {
+    try {
+      const filePath = path.resolve(__dirname, '..', 'static', filename);
+      if (fs.existsSync(filePath)) {
+        console.log(filePath);
+        fs.rm(filePath, () => {});
+        return filePath;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async createFile(file): Promise<string> {
     try {
       // Генерируем уникальное имя файла

@@ -7,6 +7,7 @@ import {
   DataType,
   ForeignKey,
   HasMany,
+  HasOne,
   Model,
   Table,
 } from 'sequelize-typescript';
@@ -47,15 +48,21 @@ export class ProductType extends Model<ProductType, ProductTypeCtreationAttrs> {
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   picture: string;
 
-  @ForeignKey(() => ProductType)
+  // @ForeignKey(() => ProductType)
+  @ApiProperty({
+    example: '1',
+    description: 'Родитель категории',
+  })
   @Column({ type: DataType.INTEGER })
   parentId: number;
 
-  @HasMany(() => Products)
-  products: Products;
+  // @HasOne(() => ProductType, { onDelete: 'cascade' })
+  // productType: ProductType;
+  // @HasMany(() => Products)
+  // products: Products;
 
-  @BelongsTo(() => ProductType)
-  productType: ProductType;
+  // @BelongsTo(() => ProductType)
+  // productType: ProductType;
 
   //   @BelongsToMany(() => ProductBrand, () => TypeBrand)
   //   productBrand: ProductBrand[];
