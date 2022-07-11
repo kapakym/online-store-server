@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ChangePictureProductTypeDto } from './dto/change-picture-productType.dto';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { DeleteProductTypeDto } from './dto/delete-productType.dto';
 import { ProductType } from './product-type.model';
@@ -26,6 +27,21 @@ export class ProductTypeController {
   @UseInterceptors(FileInterceptor('picture'))
   create(@Body() productDto: CreateProductTypeDto, @UploadedFile() picture) {
     return this.serviceProductType.createProductType(productDto, picture);
+  }
+
+  @ApiOperation({ summary: 'Изменение картинки категории' })
+  @ApiResponse({ status: 200, type: ProductType })
+  //   @UsePipes(ValidationPipe)
+  @Post('/change-picture')
+  @UseInterceptors(FileInterceptor('picture'))
+  changePicture(
+    @Body() productDto: ChangePictureProductTypeDto,
+    @UploadedFile() picture,
+  ) {
+    return this.serviceProductType.changePictureProductType(
+      productDto,
+      picture,
+    );
   }
 
   @ApiOperation({ summary: 'Получить все категории товаров' })

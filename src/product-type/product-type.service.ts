@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { type } from 'os';
 import { FilesService } from 'src/files/files.service';
+import { ChangePictureProductTypeDto } from './dto/change-picture-productType.dto';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { DeleteProductTypeDto } from './dto/delete-productType.dto';
 import { ProductType } from './product-type.model';
@@ -27,6 +28,21 @@ export class ProductTypeService {
     return productType;
   }
 
+  async changePictureProductType(
+    dto: ChangePictureProductTypeDto,
+    picture: any,
+  ) {
+    const filename = await this.fileService.createFile(picture);
+    const productType: ProductType = await this.productTypeRepository.findOne({
+      where: { id: dto.id },
+    });
+    await this.fileService.removeFile(productType.picture);
+    productType.picture = filename;
+    console.log(filename);
+    await productType.save();
+    return { picture: productType.picture };
+  }
+
   async getAllTypes() {
     const types: any = await this.productTypeRepository.findAll({});
     const answer: AnswerProductType[] = [];
@@ -48,11 +64,15 @@ export class ProductTypeService {
 
   async remove(id: number) {
     try {
-      const productType: any = await this.productTypeRepository.findByPk(id);
+      const productType: any = await this.productTypeRepository.findOne({
+        where: { id: id },
+      });
+      console.log('productType', id, productType);
       const types: any = await this.productTypeRepository.findAll({
         where: { parentId: id },
         // include: { all: true },
       });
+      console.log(productType);
       this.fileService.removeFile(productType.picture);
       const removeProductType = await this.productTypeRepository.destroy({
         where: { id: id },
