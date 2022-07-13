@@ -5,6 +5,7 @@ import { FilesService } from 'src/files/files.service';
 import { ChangePictureProductTypeDto } from './dto/change-picture-productType.dto';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { DeleteProductTypeDto } from './dto/delete-productType.dto';
+import { UpdateProductType } from './dto/update-productType.dto';
 import { ProductType } from './product-type.model';
 import { AnswerProductType } from './types/product-type.types';
 
@@ -61,6 +62,11 @@ export class ProductTypeService {
     this.remove(dto.id);
     return { status: 'deleted' };
   }
+
+  async updateProductType(dto: UpdateProductType) {
+   console.log(dto)
+  }
+
 
   async remove(id: number) {
     try {

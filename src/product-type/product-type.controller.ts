@@ -11,6 +11,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ChangePictureProductTypeDto } from './dto/change-picture-productType.dto';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { DeleteProductTypeDto } from './dto/delete-productType.dto';
+import { UpdateProductType } from './dto/update-productType.dto';
 import { ProductType } from './product-type.model';
 import { ProductTypeService } from './product-type.service';
 
@@ -41,6 +42,18 @@ export class ProductTypeController {
     return this.serviceProductType.changePictureProductType(
       productDto,
       picture,
+    );
+  }
+
+  @ApiOperation({ summary: 'Изменение названия категории и ее родителя' })
+  @ApiResponse({ status: 200, type: ProductType })
+  //   @UsePipes(ValidationPipe)
+  @Post('/update')
+  updateCategory(
+    @Body() dto: UpdateProductType,
+  ) {
+    return this.serviceProductType.updateProductType(
+      dto
     );
   }
 
