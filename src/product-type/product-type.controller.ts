@@ -49,12 +49,8 @@ export class ProductTypeController {
   @ApiResponse({ status: 200, type: ProductType })
   //   @UsePipes(ValidationPipe)
   @Post('/update')
-  updateCategory(
-    @Body() dto: UpdateProductType,
-  ) {
-    return this.serviceProductType.updateProductType(
-      dto
-    );
+  updateCategory(@Body() dto: UpdateProductType) {
+    return this.serviceProductType.updateProductType(dto);
   }
 
   @ApiOperation({ summary: 'Получить все категории товаров' })

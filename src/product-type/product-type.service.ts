@@ -69,9 +69,8 @@ export class ProductTypeService {
     productType.name = dto.name;
     productType.parentId = dto.parentId;
     productType.save();
-    return {status:"ok"}
+    return { status: 'ok' };
   }
-
 
   async remove(id: number) {
     try {
