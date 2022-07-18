@@ -22,7 +22,7 @@ export class ProductTypeService {
     console.log(dto);
     const productType = await this.productTypeRepository.create({
       ...dto,
-      parentId: dto.parentId == 0 ? null : dto.parentId,
+      parentId: dto.parentId,
       picture: filename,
     });
     console.log(productType);
@@ -64,7 +64,13 @@ export class ProductTypeService {
   }
 
   async updateProductType(dto: UpdateProductType) {
-   console.log(dto)
+    const productType: ProductType = await this.productTypeRepository.findOne({
+      where: { id: dto.id },
+    });
+    productType.name = dto.name;
+    productType.parentId = dto.parentId;
+    productType.save();
+    return {status:"ok"}
   }
 
 

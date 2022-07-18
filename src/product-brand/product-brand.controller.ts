@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductBrandDto } from './dto/create-productBrand.dto';
 import { ProductBrand } from './product-brand.model';
@@ -16,5 +16,12 @@ export class ProductBrandController {
   @Post()
   create(@Body() productBrandDto: CreateProductBrandDto) {
     return this.serviceProductBrand.createProductBrand(productBrandDto);
+  }
+
+  @ApiOperation({ summary: 'Получение списка производителей' })
+  @ApiResponse({ status: 200, type: ProductBrand })
+  @Get()
+  getAll() {
+    return this.serviceProductBrand.getAllBrand();
   }
 }

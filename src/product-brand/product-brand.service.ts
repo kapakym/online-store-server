@@ -14,4 +14,9 @@ export class ProductBrandService {
     const productBrand = await this.productBrandRepo.create(dto);
     return productBrand;
   }
+
+  async getAllBrand() {
+    const result = await this.productBrandRepo.findAll();
+    return result;
+  }
 }

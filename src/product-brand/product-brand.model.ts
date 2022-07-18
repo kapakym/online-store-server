@@ -35,6 +35,13 @@ export class ProductBrand extends Model<ProductBrand> {
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   name: string;
 
+  @ApiProperty({
+    example: '/picture.jpg',
+    description: 'Лейбл производителя',
+  })
+  @Column({ type: DataType.STRING })
+  picture: string;
+
   @ForeignKey(() => ProductType)
   @Column({ type: DataType.INTEGER })
   productTypeId: Number;
