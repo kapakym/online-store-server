@@ -42,13 +42,6 @@ export class ProductBrand extends Model<ProductBrand> {
   @Column({ type: DataType.STRING })
   picture: string;
 
-  @ForeignKey(() => ProductType)
-  @Column({ type: DataType.INTEGER })
-  productTypeId: Number;
-
   @HasMany(() => Products)
   products: Products;
-
-  @BelongsTo(() => ProductType)
-  productType: ProductType;
 }

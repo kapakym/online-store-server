@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductBrandDto } from './dto/create-productBrand.dto';
 import { ProductBrand } from './product-brand.model';
@@ -14,8 +22,15 @@ export class ProductBrandController {
   @ApiResponse({ status: 200, type: ProductBrand })
   //   @UsePipes(ValidationPipe)
   @Post()
-  create(@Body() productBrandDto: CreateProductBrandDto) {
-    return this.serviceProductBrand.createProductBrand(productBrandDto);
+  @UseInterceptors(FileInterceptor('picture'))
+  create(
+    @Body() productBrandDto: CreateProductBrandDto,
+    @UploadedFile() picture,
+  ) {
+    return this.serviceProductBrand.createProductBrand(
+      productBrandDto,
+      picture,
+    );
   }
 
   @ApiOperation({ summary: 'Получение списка производителей' })
