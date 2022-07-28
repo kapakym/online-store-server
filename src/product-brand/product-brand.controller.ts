@@ -12,6 +12,8 @@ import { CreateProductBrandDto } from './dto/create-productBrand.dto';
 import { ProductBrand } from './product-brand.model';
 import { ProductBrandService } from './product-brand.service';
 import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
+import { ProductType } from '../product-type/product-type.model';
+import { ChangePictureProductTypeDto } from '../product-type/dto/change-picture-productType.dto';
 
 @ApiTags('Производители товаров')
 @Controller('product-brand')
@@ -47,5 +49,20 @@ export class ProductBrandController {
   @Post('/delete')
   delete(@Body() productBrandDto: DeleteProductBrandDto) {
     return this.serviceProductBrand.deleteProductBrand(productBrandDto);
+  }
+
+  @ApiOperation({ summary: 'Изменение логотипа производителя' })
+  @ApiResponse({ status: 200, type: ProductType })
+  //   @UsePipes(ValidationPipe)
+  @Post('/change-picture')
+  @UseInterceptors(FileInterceptor('picture'))
+  changePicture(
+    @Body() productBrandDto: ChangePictureProductTypeDto,
+    @UploadedFile() picture,
+  ) {
+    return this.serviceProductType.changePictureProductType(
+      productBrandDto,
+      picture,
+    );
   }
 }
