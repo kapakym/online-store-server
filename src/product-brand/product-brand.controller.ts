@@ -11,6 +11,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductBrandDto } from './dto/create-productBrand.dto';
 import { ProductBrand } from './product-brand.model';
 import { ProductBrandService } from './product-brand.service';
+import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
 
 @ApiTags('Производители товаров')
 @Controller('product-brand')
@@ -38,5 +39,13 @@ export class ProductBrandController {
   @Get()
   getAll() {
     return this.serviceProductBrand.getAllBrand();
+  }
+
+  @ApiOperation({ summary: 'Удаление производителя товара' })
+  @ApiResponse({ status: 200, type: ProductBrand })
+  //   @UsePipes(ValidationPipe)
+  @Post('/delete')
+  delete(@Body() productBrandDto: DeleteProductBrandDto) {
+    return this.serviceProductBrand.deleteProductBrand(productBrandDto);
   }
 }

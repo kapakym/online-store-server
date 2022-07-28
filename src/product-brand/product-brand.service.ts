@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { FilesService } from 'src/files/files.service';
 import { CreateProductBrandDto } from './dto/create-productBrand.dto';
 import { ProductBrand } from './product-brand.model';
+import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
 
 @Injectable()
 export class ProductBrandService {
@@ -25,5 +26,20 @@ export class ProductBrandService {
     const result = await this.productBrandRepo.findAll({});
     console.log(result);
     return result;
+  }
+
+  async deleteProductBrand(dto: DeleteProductBrandDto) {
+    console.log(dto);
+    try {
+      const productBrand: any = await this.productBrandRepo.findOne({
+        where: { id: dto.id },
+      });
+      const removeProductBrand = await this.productBrandRepo.destroy({
+        where: { id: dto.id },
+      });
+      return { status: 'deleted' };
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
