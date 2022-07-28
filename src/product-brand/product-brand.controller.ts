@@ -13,7 +13,7 @@ import { ProductBrand } from './product-brand.model';
 import { ProductBrandService } from './product-brand.service';
 import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
 import { ProductType } from '../product-type/product-type.model';
-import { ChangePictureProductTypeDto } from '../product-type/dto/change-picture-productType.dto';
+import { ChangePictureProductBrandDto } from './dto/change-picture-productBrand.dto';
 
 @ApiTags('Производители товаров')
 @Controller('product-brand')
@@ -57,10 +57,10 @@ export class ProductBrandController {
   @Post('/change-picture')
   @UseInterceptors(FileInterceptor('picture'))
   changePicture(
-    @Body() productBrandDto: ChangePictureProductTypeDto,
+    @Body() productBrandDto: ChangePictureProductBrandDto,
     @UploadedFile() picture,
   ) {
-    return this.serviceProductType.changePictureProductType(
+    return this.serviceProductBrand.changePictureProductBrand(
       productBrandDto,
       picture,
     );
