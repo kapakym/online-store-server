@@ -4,6 +4,7 @@ import { FilesService } from 'src/files/files.service';
 import { CreateProductBrandDto } from './dto/create-productBrand.dto';
 import { ProductBrand } from './product-brand.model';
 import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
+import { ChangePictureProductBrandDto } from './dto/change-picture-productBrand.dto';
 
 @Injectable()
 export class ProductBrandService {
@@ -41,5 +42,20 @@ export class ProductBrandService {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async changePictureProductBrand(
+    dto: ChangePictureProductBrandDto,
+    picture: any,
+  ) {
+    const filename = await this.fileService.createFile(picture);
+    const productBrand: ProductBrand = await this.productBrandRepo.findOne({
+      where: { id: dto.id },
+    });
+    await this.fileService.removeFile(productBrand.picture);
+    productBrand.picture = filename;
+    console.log(filename);
+    await productBrand.save();
+    return { picture: productBrand.picture };
   }
 }
