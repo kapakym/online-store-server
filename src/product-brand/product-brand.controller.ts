@@ -27,14 +27,8 @@ export class ProductBrandController {
   //   @UsePipes(ValidationPipe)
   @Post()
   @UseInterceptors(FileInterceptor('picture'))
-  create(
-    @Body() productBrandDto: CreateProductBrandDto,
-    @UploadedFile() picture,
-  ) {
-    return this.serviceProductBrand.createProductBrand(
-      productBrandDto,
-      picture,
-    );
+  create(@Body() dto: CreateProductBrandDto, @UploadedFile() picture) {
+    return this.serviceProductBrand.createProductBrand(dto, picture);
   }
 
   @ApiOperation({ summary: 'Получение списка производителей' })
@@ -56,7 +50,7 @@ export class ProductBrandController {
   @ApiResponse({ status: 200, type: ProductBrand })
   //   @UsePipes(ValidationPipe)
   @Post('/update')
-  delete(@Body() dto: UpdateProductBrandDto) {
+  update(@Body() dto: UpdateProductBrandDto) {
     return this.serviceProductBrand.updateProductBrand(dto);
   }
 
