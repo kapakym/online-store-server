@@ -14,6 +14,7 @@ import { ProductBrandService } from './product-brand.service';
 import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
 import { ProductType } from '../product-type/product-type.model';
 import { ChangePictureProductBrandDto } from './dto/change-picture-productBrand.dto';
+import { UpdateProductBrandDto } from './dto/update-productBrand.dto';
 
 @ApiTags('Производители товаров')
 @Controller('product-brand')
@@ -47,8 +48,16 @@ export class ProductBrandController {
   @ApiResponse({ status: 200, type: ProductBrand })
   //   @UsePipes(ValidationPipe)
   @Post('/delete')
-  delete(@Body() productBrandDto: DeleteProductBrandDto) {
-    return this.serviceProductBrand.deleteProductBrand(productBrandDto);
+  delete(@Body() dto: DeleteProductBrandDto) {
+    return this.serviceProductBrand.deleteProductBrand(dto);
+  }
+
+  @ApiOperation({ summary: 'Изменение имени производителя товаров' })
+  @ApiResponse({ status: 200, type: ProductBrand })
+  //   @UsePipes(ValidationPipe)
+  @Post('/update')
+  delete(@Body() dto: UpdateProductBrandDto) {
+    return this.serviceProductBrand.updateProductBrand(dto);
   }
 
   @ApiOperation({ summary: 'Изменение логотипа производителя' })
@@ -57,12 +66,9 @@ export class ProductBrandController {
   @Post('/change-picture')
   @UseInterceptors(FileInterceptor('picture'))
   changePicture(
-    @Body() productBrandDto: ChangePictureProductBrandDto,
+    @Body() dto: ChangePictureProductBrandDto,
     @UploadedFile() picture,
   ) {
-    return this.serviceProductBrand.changePictureProductBrand(
-      productBrandDto,
-      picture,
-    );
+    return this.serviceProductBrand.changePictureProductBrand(dto, picture);
   }
 }
