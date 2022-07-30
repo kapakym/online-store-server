@@ -58,4 +58,19 @@ export class ProductBrandService {
     await productBrand.save();
     return { picture: productBrand.picture };
   }
+
+  async updateProductBrand(dto) {
+    try {
+      const productBrand: ProductBrand = await this.productBrandRepo.findOne({
+        where: { id: dto.id },
+      });
+      if (productBrand) {
+        productBrand.name = dto.name;
+        productBrand.save();
+      } else {
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
