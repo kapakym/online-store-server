@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { RolesService } from 'src/roles/roles.service';
-import { threadId } from 'worker_threads';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BannedUserDto } from './dto/banned-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteUserDto } from './dto/delete-user.dto';
 import { User } from './users.model';
+import { UserByPageDto } from './dto/get-user-by-page.dto';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +14,7 @@ export class UsersService {
     @InjectModel(User) private userRepository: typeof User,
     private roleService: RolesService,
   ) {}
+
   async createUser(dto: CreateUserDto) {
     const user = await this.userRepository.create(dto);
     const role = await this.roleService.getRoleByValue('USER');
@@ -23,6 +24,12 @@ export class UsersService {
   }
 
   async getAllUsers() {
+    const users = await this.userRepository.findAll({ include: { all: true } });
+    return users;
+  }
+
+  async getUserByPage(dto: UserByPageDto) {
+    console.log(dto);
     const users = await this.userRepository.findAll({ include: { all: true } });
     return users;
   }
