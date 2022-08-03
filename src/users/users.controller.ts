@@ -1,14 +1,12 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Post,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { ValidationPipe } from 'src/pipes/validation.pipe';
@@ -19,6 +17,7 @@ import { DeleteUserDto } from './dto/delete-user.dto';
 import { User } from './users.model';
 
 import { UsersService } from './users.service';
+import { UserByPageDto } from './dto/get-user-by-page.dto';
 
 @ApiTags('Пользователи')
 @Controller('users')
@@ -49,6 +48,19 @@ export class UsersController {
   @Get()
   getAll() {
     return this.usersService.getAllUsers();
+  }
+
+  @ApiOperation({
+    summary:
+      'Получение определенного количества пользователей на определенной странице',
+  })
+  @ApiResponse({ status: 200, type: [User] })
+  // @UseGuards(JwtAuthGuard)
+  // @Roles('ADMIN')
+  // @UseGuards(RolesGuard)
+  @Get('/page')
+  getUsersByPage(@Body() dto: UserByPageDto) {
+    return this.usersService.getUserByPage(dto);
   }
 
   @ApiOperation({ summary: 'Назначить права' })
