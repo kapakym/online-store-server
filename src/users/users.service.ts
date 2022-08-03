@@ -24,14 +24,26 @@ export class UsersService {
   }
 
   async getAllUsers() {
-    const users = await this.userRepository.findAll({ include: { all: true } });
+    const users = await this.userRepository.findAll({
+      include: { all: true },
+      order: [['email', 'ASC']],
+    });
     return users;
   }
 
-  async getUserByPage(dto: UserByPageDto) {
-    console.log(dto);
-    const users = await this.userRepository.findAll({ include: { all: true } });
-    return users;
+  async getUserByPage(param: UserByPageDto) {
+    console.log('sto', param);
+
+    const count = await this.userRepository.count();
+    console.log(param.limit * param.page);
+    const users = await this.userRepository.findAll({
+      include: { all: true },
+      limit: param.limit,
+      offset: param.limit * param.page,
+      order: [['email', 'ASC']],
+    });
+    // const users = await this.userRepository.fin;
+    return { users, count };
   }
 
   async getUserByEmail(email: string) {
