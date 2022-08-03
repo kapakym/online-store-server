@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -54,12 +55,12 @@ export class UsersController {
     summary:
       'Получение определенного количества пользователей на определенной странице',
   })
-  @ApiResponse({ status: 200, type: [User] })
+  @ApiResponse({ status: 200, type: User })
   // @UseGuards(JwtAuthGuard)
   // @Roles('ADMIN')
   // @UseGuards(RolesGuard)
   @Get('/page')
-  getUsersByPage(@Body() dto: UserByPageDto) {
+  getUsersByPage(@Query() dto: UserByPageDto) {
     return this.usersService.getUserByPage(dto);
   }
 
