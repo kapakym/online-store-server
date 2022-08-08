@@ -9,7 +9,8 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/users/users.model';
-import { DeleteUserDto } from 'src/users/dto/delete-user.dto';
+
+const uuid = require('uuid');
 
 @Injectable()
 export class AuthService {
@@ -22,8 +23,10 @@ export class AuthService {
   // Обработчик авторизация пользователя в магазине
   async login(userDto: CreateUserDto) {
     const user = await this.validateUser(userDto);
+    console.log(user);
     return this.generatorToken(user);
   }
+
   private async validateUser(userDto: CreateUserDto) {
     // Получаем реквизиты пользователя из базы данных
     const user = await this.userSevice.getUserByEmail(userDto.email);
@@ -39,14 +42,14 @@ export class AuthService {
       message: 'Некоректный емайл или пароль',
     });
   }
+
   // Обработчик регистрация ползователя в магазине
   async registration(userDto: CreateUserDto) {
     // Проверяем, есть ли такоей пользователь в базе
     const candidate = await this.userSevice.getUserByEmail(userDto.email);
-    console.log(candidate);
     if (candidate) {
       throw new HttpException(
-        'Пользователь с таким email уже существует',
+        `Пользователь с таким ${userDto.email} уже существует`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -58,6 +61,7 @@ export class AuthService {
       ...userDto,
       password: hashPassword,
     });
+    const activationLink = uuid.v4();
     return this.generatorToken(user);
   }
 
