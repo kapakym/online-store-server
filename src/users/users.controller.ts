@@ -19,6 +19,7 @@ import { User } from './users.model';
 
 import { UsersService } from './users.service';
 import { UserByPageDto } from './dto/get-user-by-page.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Пользователи')
 @Controller('users')
@@ -26,7 +27,7 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @ApiOperation({ summary: 'Удаление пользователя' })
-  @ApiResponse({ status: 200, type: User })
+  @ApiResponse({ status: 200, type: DeleteUserDto })
   // @UsePipes(ValidationPipe)
   @Post('/delete')
   delete(@Body() userDto: DeleteUserDto) {
@@ -34,7 +35,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'Создание пользователя' })
-  @ApiResponse({ status: 200, type: User })
+  @ApiResponse({ status: 200, type: CreateUserDto })
   @UsePipes(ValidationPipe)
   @Post()
   create(@Body() userDto: CreateUserDto) {
@@ -42,7 +43,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'Получение всех пользователей' })
-  @ApiResponse({ status: 200, type: [User] })
+  @ApiResponse({ status: 200 })
   // @UseGuards(JwtAuthGuard)
   // @Roles('ADMIN')
   // @UseGuards(RolesGuard)
@@ -55,8 +56,8 @@ export class UsersController {
     summary:
       'Получение определенного количества пользователей на определенной странице',
   })
-  @ApiResponse({ status: 200, type: User })
-  // @UseGuards(JwtAuthGuard)
+  @ApiResponse({ status: 200, type: UserByPageDto })
+  @UseGuards(JwtAuthGuard)
   // @Roles('ADMIN')
   // @UseGuards(RolesGuard)
   @Get('/page')
