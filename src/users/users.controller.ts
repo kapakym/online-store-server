@@ -44,9 +44,9 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Получение всех пользователей' })
   @ApiResponse({ status: 200 })
-  // @UseGuards(JwtAuthGuard)
-  // @Roles('ADMIN')
-  // @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Get()
   getAll() {
     return this.usersService.getAllUsers();
@@ -58,8 +58,8 @@ export class UsersController {
   })
   @ApiResponse({ status: 200, type: UserByPageDto })
   @UseGuards(JwtAuthGuard)
-  // @Roles('ADMIN')
-  // @UseGuards(RolesGuard)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Get('/page')
   getUsersByPage(@Query() dto: UserByPageDto) {
     return this.usersService.getUserByPage(dto);
