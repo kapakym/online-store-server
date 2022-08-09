@@ -3,7 +3,9 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -15,6 +17,10 @@ import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
 import { ProductType } from '../product-type/product-type.model';
 import { ChangePictureProductBrandDto } from './dto/change-picture-productBrand.dto';
 import { UpdateProductBrandDto } from './dto/update-productBrand.dto';
+import { BrandByPageDto } from './dto/get-brand-by-page.dto';
+import { Roles } from '../auth/roles-auth.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Производители товаров')
 @Controller('product-brand')
@@ -31,8 +37,25 @@ export class ProductBrandController {
     return this.serviceProductBrand.createProductBrand(dto, picture);
   }
 
-  @ApiOperation({ summary: 'Получение списка производителей' })
+  @ApiOperation({
+    summary: 'Получение определенной страницы с производителями',
+  })
   @ApiResponse({ status: 200, type: ProductBrand })
+  @UseGuards(JwtAuthGuard)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
+  @Get('/page')
+  getByPage(@Query() dto: BrandByPageDto) {
+    return this.serviceProductBrand.getBrandByPage(dto);
+  }
+
+  @ApiOperation({
+    summary: 'Получение всех производителей',
+  })
+  @ApiResponse({ status: 200, type: ProductBrand })
+  @UseGuards(JwtAuthGuard)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Get()
   getAll() {
     return this.serviceProductBrand.getAllBrand();

@@ -5,6 +5,7 @@ import { CreateProductBrandDto } from './dto/create-productBrand.dto';
 import { ProductBrand } from './product-brand.model';
 import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
 import { ChangePictureProductBrandDto } from './dto/change-picture-productBrand.dto';
+import { BrandByPageDto } from './dto/get-brand-by-page.dto';
 
 @Injectable()
 export class ProductBrandService {
@@ -72,5 +73,19 @@ export class ProductBrandService {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async getBrandByPage(param: BrandByPageDto) {
+    console.log('sto', param);
+
+    const count = await this.productBrandRepo.count();
+    console.log(param.limit * param.page);
+    const brands = await this.productBrandRepo.findAll({
+      include: { all: true },
+      limit: param.limit,
+      offset: param.limit * param.page,
+      order: [['name', 'ASC']],
+    });
+    return { brands, count };
   }
 }
