@@ -31,6 +31,9 @@ export class ProductBrandController {
   @ApiOperation({ summary: 'Добавление нового производителя' })
   @ApiResponse({ status: 200, type: ProductBrand })
   //   @UsePipes(ValidationPipe)
+  @UseGuards(JwtAuthGuard)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Post()
   @UseInterceptors(FileInterceptor('picture'))
   create(@Body() dto: CreateProductBrandDto, @UploadedFile() picture) {
@@ -63,7 +66,10 @@ export class ProductBrandController {
 
   @ApiOperation({ summary: 'Удаление производителя товара' })
   @ApiResponse({ status: 200, type: ProductBrand })
-  //   @UsePipes(ValidationPipe)
+  // @UsePipes(ValidationPipe)
+  @UseGuards(JwtAuthGuard)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Post('/delete')
   delete(@Body() dto: DeleteProductBrandDto) {
     return this.serviceProductBrand.deleteProductBrand(dto);
@@ -72,6 +78,9 @@ export class ProductBrandController {
   @ApiOperation({ summary: 'Изменение имени производителя товаров' })
   @ApiResponse({ status: 200, type: ProductBrand })
   //   @UsePipes(ValidationPipe)
+  @UseGuards(JwtAuthGuard)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Post('/update')
   update(@Body() dto: UpdateProductBrandDto) {
     return this.serviceProductBrand.updateProductBrand(dto);
@@ -80,6 +89,9 @@ export class ProductBrandController {
   @ApiOperation({ summary: 'Изменение логотипа производителя' })
   @ApiResponse({ status: 200, type: ProductType })
   //   @UsePipes(ValidationPipe)
+  @UseGuards(JwtAuthGuard)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Post('/change-picture')
   @UseInterceptors(FileInterceptor('picture'))
   changePicture(
