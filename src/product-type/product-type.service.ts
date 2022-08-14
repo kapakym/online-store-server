@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { type } from 'os';
 import { FilesService } from 'src/files/files.service';
 import { ChangePictureProductTypeDto } from './dto/change-picture-productType.dto';
 import { CreateProductTypeDto } from './dto/create-productType.dto';
@@ -58,7 +57,10 @@ export class ProductTypeService {
   }
 
   async deleteProductType(dto: DeleteProductTypeDto) {
-    this.remove(dto.id);
+    const productType: ProductType = await this.productTypeRepository.findOne({
+      where: { id: dto.id },
+    });
+    await productType.destroy();
     return { status: 'deleted' };
   }
 

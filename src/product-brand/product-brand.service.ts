@@ -36,9 +36,8 @@ export class ProductBrandService {
       const productBrand: any = await this.productBrandRepo.findOne({
         where: { id: dto.id },
       });
-      const removeProductBrand = await this.productBrandRepo.destroy({
-        where: { id: dto.id },
-      });
+      const result = await productBrand.destroy();
+
       return { status: 'deleted' };
     } catch (error) {
       console.log(error);
