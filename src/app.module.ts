@@ -7,36 +7,25 @@ import { User } from './users/users.model';
 import { Role } from './roles/roles.model';
 import { UserRoles } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
-import { ProductsModule } from './products/products.module';
-import { BasketModule } from './basket/basket.module';
-import { BasketProductController } from './basket-product/basket-product.controller';
-import { BasketProductModule } from './basket-product/basket-product.module';
-import { ProductTypeModule } from './product-type/product-type.module';
-import { ProductRaitingService } from './product-raiting/product-raiting.service';
-import { ProductRaitingModule } from './product-raiting/product-raiting.module';
-import { ProductPropertyController } from './product-property/product-property.controller';
-import { ProductPropertyModule } from './product-property/product-property.module';
-import { Basket } from './basket/basket.model';
-import { ProductType } from './product-type/product-type.model';
-import { ProductRaiting } from './product-raiting/product-raiting.model';
-import { BasketProduct } from './basket-product/basket-product.model';
-import { Products } from './products/products.model';
-import { ProductProperty } from './product-property/product-property.model';
-import { TypeBrand } from './product-type/type-brand.model';
-import { ProductBrandController } from './product-brand/product-brand.controller';
-import { ProductBrand } from './product-brand/product-brand.model';
-import { ProductBrandModule } from './product-brand/product-brand.module';
+import { CategoryModule } from './category/category.module';
+import { Category } from './category/category.model';
+import { TypeBrand } from './category/type-brand.model';
+import { BrandModule } from './brand/brand.module';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
+import { TemplateModule } from './templates/template.module';
+import { Template } from './templates/template.model';
+import { PropertyModule } from './property/property.module';
+import { Brand } from './brand/brand.model';
 
 @Module({
   controllers: [
     // BasketProductController,
-    // ProductBrandController,
+    // BrandController,
     // ProductPropertyController,
   ],
-  providers: [ProductRaitingService],
+  providers: [],
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -52,32 +41,17 @@ import * as path from 'path';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [
-        User,
-        Role,
-        UserRoles,
-        Basket,
-        ProductBrand,
-        ProductType,
-        ProductRaiting,
-        BasketProduct,
-        Products,
-        ProductProperty,
-        TypeBrand,
-      ],
+      models: [User, Role, UserRoles, Brand, Category, TypeBrand, Template],
       autoLoadModels: true,
     }),
     UsersModule,
     RolesModule,
     AuthModule,
-    ProductsModule,
-    BasketModule,
-    BasketProductModule,
-    ProductTypeModule,
-    ProductBrandModule,
-    ProductRaitingModule,
-    ProductPropertyModule,
+    CategoryModule,
+    BrandModule,
     FilesModule,
+    TemplateModule,
+    PropertyModule,
   ],
 })
 export class AppModule {}
