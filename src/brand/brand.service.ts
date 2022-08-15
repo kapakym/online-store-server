@@ -2,16 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FilesService } from 'src/files/files.service';
 import { CreateProductBrandDto } from './dto/create-productBrand.dto';
-import { ProductBrand } from './product-brand.model';
+import { Brand } from './brand.model';
 import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
 import { ChangePictureProductBrandDto } from './dto/change-picture-productBrand.dto';
 import { BrandByPageDto } from './dto/get-brand-by-page.dto';
 
 @Injectable()
-export class ProductBrandService {
+export class BrandService {
   // Инжектируем модель
   constructor(
-    @InjectModel(ProductBrand) private productBrandRepo: typeof ProductBrand,
+    @InjectModel(Brand) private productBrandRepo: typeof Brand,
     private fileService: FilesService,
   ) {}
 
@@ -49,7 +49,7 @@ export class ProductBrandService {
     picture: any,
   ) {
     const filename = await this.fileService.createFile(picture);
-    const productBrand: ProductBrand = await this.productBrandRepo.findOne({
+    const productBrand: Brand = await this.productBrandRepo.findOne({
       where: { id: dto.id },
     });
     await this.fileService.removeFile(productBrand.picture);
@@ -61,7 +61,7 @@ export class ProductBrandService {
 
   async updateProductBrand(dto) {
     try {
-      const productBrand: ProductBrand = await this.productBrandRepo.findOne({
+      const productBrand: Brand = await this.productBrandRepo.findOne({
         where: { id: dto.id },
       });
       if (productBrand) {

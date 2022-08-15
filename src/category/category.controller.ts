@@ -12,17 +12,17 @@ import { ChangePictureProductTypeDto } from './dto/change-picture-productType.dt
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { DeleteProductTypeDto } from './dto/delete-productType.dto';
 import { UpdateProductType } from './dto/update-productType.dto';
-import { ProductType } from './product-type.model';
-import { ProductTypeService } from './product-type.service';
+import { Category } from './category.model';
+import { CategoryService } from './category.service';
 
 @ApiTags('Категории товаров')
-@Controller('product-type')
-export class ProductTypeController {
+@Controller('category')
+export class CategoryController {
   // Инжектируем сервис для работы с категориями товаров
-  constructor(private serviceProductType: ProductTypeService) {}
+  constructor(private serviceProductType: CategoryService) {}
 
   @ApiOperation({ summary: 'Создание категории товара' })
-  @ApiResponse({ status: 200, type: ProductType })
+  @ApiResponse({ status: 200, type: Category })
   //   @UsePipes(ValidationPipe)
   @Post()
   @UseInterceptors(FileInterceptor('picture'))
@@ -31,7 +31,7 @@ export class ProductTypeController {
   }
 
   @ApiOperation({ summary: 'Изменение картинки категории' })
-  @ApiResponse({ status: 200, type: ProductType })
+  @ApiResponse({ status: 200, type: Category })
   //   @UsePipes(ValidationPipe)
   @Post('/change-picture')
   @UseInterceptors(FileInterceptor('picture'))
@@ -46,7 +46,7 @@ export class ProductTypeController {
   }
 
   @ApiOperation({ summary: 'Изменение названия категории и ее родителя' })
-  @ApiResponse({ status: 200, type: ProductType })
+  @ApiResponse({ status: 200, type: Category })
   //   @UsePipes(ValidationPipe)
   @Post('/update')
   updateCategory(@Body() dto: UpdateProductType) {
@@ -54,7 +54,7 @@ export class ProductTypeController {
   }
 
   @ApiOperation({ summary: 'Получить все категории товаров' })
-  @ApiResponse({ status: 200, type: [ProductType] })
+  @ApiResponse({ status: 200, type: [Category] })
   // @UseGuards(JwtAuthGuard)
   //   @Roles('ADMIN')
   //   @UseGuards(RolesGuard)
@@ -64,7 +64,7 @@ export class ProductTypeController {
   }
 
   @ApiOperation({ summary: 'Удаление категории товара' })
-  @ApiResponse({ status: 200, type: ProductType })
+  @ApiResponse({ status: 200, type: Category })
   //   @UsePipes(ValidationPipe)
   @Post('/delete')
   delete(@Body() productDto: DeleteProductTypeDto) {

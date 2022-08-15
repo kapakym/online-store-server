@@ -1,21 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { STRING } from 'sequelize';
 import {
-  BelongsTo,
-  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
-  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
-import { ProductBrand } from 'src/product-brand/product-brand.model';
-import { ProductType } from './product-type.model';
-
-// interface ProductTypeCtreationAttrs {
-//   name: string;
-// }
+import { Category } from './category.model';
+import { Brand } from '../brand/brand.model';
 
 @Table({ tableName: 'brand_type', createdAt: false, updatedAt: false })
 export class TypeBrand extends Model<TypeBrand> {
@@ -28,13 +20,13 @@ export class TypeBrand extends Model<TypeBrand> {
   })
   id: number;
 
-  @ForeignKey(() => ProductType)
+  @ForeignKey(() => Category)
   @Column({
     type: DataType.INTEGER,
   })
   productId: number;
 
-  @ForeignKey(() => ProductBrand)
+  @ForeignKey(() => Brand)
   @Column({
     type: DataType.INTEGER,
   })

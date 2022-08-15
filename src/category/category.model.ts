@@ -1,21 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { STRING } from 'sequelize';
-import {
-  BelongsTo,
-  BelongsToMany,
-  Column,
-  DataType,
-  ForeignKey,
-  HasMany,
-  HasOne,
-  Model,
-  Table,
-} from 'sequelize-typescript';
-import { Col } from 'sequelize/types/utils';
-import { ProductBrand } from 'src/product-brand/product-brand.model';
-import { Products } from 'src/products/products.model';
-import { User } from 'src/users/users.model';
-import { TypeBrand } from './type-brand.model';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 interface ProductTypeCtreationAttrs {
   name: string;
@@ -23,8 +7,8 @@ interface ProductTypeCtreationAttrs {
   picture: string;
 }
 
-@Table({ tableName: 'product_type' })
-export class ProductType extends Model<ProductType, ProductTypeCtreationAttrs> {
+@Table({ tableName: 'category' })
+export class Category extends Model<Category, ProductTypeCtreationAttrs> {
   @ApiProperty({ example: '1', description: 'Уникальный индетификатор' })
   @Column({
     type: DataType.INTEGER,

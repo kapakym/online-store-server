@@ -11,25 +11,25 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProductBrandDto } from './dto/create-productBrand.dto';
-import { ProductBrand } from './product-brand.model';
-import { ProductBrandService } from './product-brand.service';
+import { BrandService } from './brand.service';
 import { DeleteProductBrandDto } from './dto/delete-productBrand.dto';
-import { ProductType } from '../product-type/product-type.model';
+import { Category } from '../category/category.model';
 import { ChangePictureProductBrandDto } from './dto/change-picture-productBrand.dto';
 import { UpdateProductBrandDto } from './dto/update-productBrand.dto';
 import { BrandByPageDto } from './dto/get-brand-by-page.dto';
 import { Roles } from '../auth/roles-auth.decorator';
 import { RolesGuard } from '../auth/roles.guard';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Brand } from './brand.model';
 
 @ApiTags('Производители товаров')
-@Controller('product-brand')
-export class ProductBrandController {
+@Controller('brand')
+export class BrandController {
   // Инжектируем сервис с которым будем работать
-  constructor(private serviceProductBrand: ProductBrandService) {}
+  constructor(private serviceProductBrand: BrandService) {}
 
   @ApiOperation({ summary: 'Добавление нового производителя' })
-  @ApiResponse({ status: 200, type: ProductBrand })
+  @ApiResponse({ status: 200, type: Brand })
   //   @UsePipes(ValidationPipe)
   @UseGuards(JwtAuthGuard)
   @Roles('ADMIN')
@@ -43,7 +43,7 @@ export class ProductBrandController {
   @ApiOperation({
     summary: 'Получение определенной страницы с производителями',
   })
-  @ApiResponse({ status: 200, type: ProductBrand })
+  @ApiResponse({ status: 200, type: Brand })
   @UseGuards(JwtAuthGuard)
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
@@ -55,7 +55,7 @@ export class ProductBrandController {
   @ApiOperation({
     summary: 'Получение всех производителей',
   })
-  @ApiResponse({ status: 200, type: ProductBrand })
+  @ApiResponse({ status: 200, type: Brand })
   @UseGuards(JwtAuthGuard)
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
@@ -65,7 +65,7 @@ export class ProductBrandController {
   }
 
   @ApiOperation({ summary: 'Удаление производителя товара' })
-  @ApiResponse({ status: 200, type: ProductBrand })
+  @ApiResponse({ status: 200, type: Brand })
   // @UsePipes(ValidationPipe)
   @UseGuards(JwtAuthGuard)
   @Roles('ADMIN')
@@ -76,7 +76,7 @@ export class ProductBrandController {
   }
 
   @ApiOperation({ summary: 'Изменение имени производителя товаров' })
-  @ApiResponse({ status: 200, type: ProductBrand })
+  @ApiResponse({ status: 200, type: Brand })
   //   @UsePipes(ValidationPipe)
   @UseGuards(JwtAuthGuard)
   @Roles('ADMIN')
@@ -87,7 +87,7 @@ export class ProductBrandController {
   }
 
   @ApiOperation({ summary: 'Изменение логотипа производителя' })
-  @ApiResponse({ status: 200, type: ProductType })
+  @ApiResponse({ status: 200, type: Category })
   //   @UsePipes(ValidationPipe)
   @UseGuards(JwtAuthGuard)
   @Roles('ADMIN')

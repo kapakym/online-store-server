@@ -5,14 +5,14 @@ import { ChangePictureProductTypeDto } from './dto/change-picture-productType.dt
 import { CreateProductTypeDto } from './dto/create-productType.dto';
 import { DeleteProductTypeDto } from './dto/delete-productType.dto';
 import { UpdateProductType } from './dto/update-productType.dto';
-import { ProductType } from './product-type.model';
+import { Category } from './category.model';
 import { AnswerProductType } from './types/product-type.types';
 
 @Injectable()
-export class ProductTypeService {
+export class CategoryService {
   // Инжектируем в сервис модель таблицы с которой будем работать
   constructor(
-    @InjectModel(ProductType) private productTypeRepository: typeof ProductType,
+    @InjectModel(Category) private productTypeRepository: typeof Category,
     private fileService: FilesService,
   ) {}
 
@@ -32,7 +32,7 @@ export class ProductTypeService {
     picture: any,
   ) {
     const filename = await this.fileService.createFile(picture);
-    const productType: ProductType = await this.productTypeRepository.findOne({
+    const productType: Category = await this.productTypeRepository.findOne({
       where: { id: dto.id },
     });
     await this.fileService.removeFile(productType.picture);
@@ -57,7 +57,7 @@ export class ProductTypeService {
   }
 
   async deleteProductType(dto: DeleteProductTypeDto) {
-    const productType: ProductType = await this.productTypeRepository.findOne({
+    const productType: Category = await this.productTypeRepository.findOne({
       where: { id: dto.id },
     });
     await productType.destroy();
@@ -65,7 +65,7 @@ export class ProductTypeService {
   }
 
   async updateProductType(dto: UpdateProductType) {
-    const productType: ProductType = await this.productTypeRepository.findOne({
+    const productType: Category = await this.productTypeRepository.findOne({
       where: { id: dto.id },
     });
     productType.name = dto.name;

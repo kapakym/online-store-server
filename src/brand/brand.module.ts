@@ -1,21 +1,21 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { FilesModule } from 'src/files/files.module';
-import { ProductBrandController } from './product-brand.controller';
-import { ProductBrand } from './product-brand.model';
-import { ProductBrandService } from './product-brand.service';
+import { BrandController } from './brand.controller';
+import { BrandService } from './brand.service';
 import { RolesModule } from '../roles/roles.module';
 import { AuthModule } from '../auth/auth.module';
+import { Brand } from './brand.model';
 
 @Module({
-  providers: [ProductBrandService],
-  controllers: [ProductBrandController],
+  providers: [BrandService],
+  controllers: [BrandController],
   imports: [
     // Модель с которой будем работать
-    SequelizeModule.forFeature([ProductBrand]),
+    SequelizeModule.forFeature([Brand]),
     FilesModule,
     RolesModule,
     forwardRef(() => AuthModule),
   ],
 })
-export class ProductBrandModule {}
+export class BrandModule {}
