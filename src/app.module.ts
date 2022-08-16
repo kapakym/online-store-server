@@ -16,7 +16,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
 import { TemplateModule } from './templates/template.module';
 import { Template } from './templates/template.model';
-import { PropertyModule } from './property/property.module';
 import { Brand } from './brand/brand.model';
 
 @Module({
@@ -51,7 +50,6 @@ import { Brand } from './brand/brand.model';
     BrandModule,
     FilesModule,
     TemplateModule,
-    PropertyModule,
   ],
 })
 export class AppModule {}
