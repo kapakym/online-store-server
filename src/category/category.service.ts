@@ -87,8 +87,5 @@ export class CategoryService {
     } catch (error) {
       console.log('ERROR', error);
     }
-
-    // types
-    // console.log(types);
   }
 }
