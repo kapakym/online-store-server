@@ -57,10 +57,7 @@ export class CategoryService {
   }
 
   async deleteProductType(dto: DeleteProductTypeDto) {
-    const productType: Category = await this.productTypeRepository.findOne({
-      where: { id: dto.id },
-    });
-    await productType.destroy();
+    await this.remove(dto.id);
     return { status: 'deleted' };
   }
 
@@ -70,7 +67,7 @@ export class CategoryService {
     });
     productType.name = dto.name;
     productType.parentId = dto.parentId;
-    productType.save();
+    await productType.save();
     return { status: 'ok' };
   }
 
@@ -79,22 +76,14 @@ export class CategoryService {
       const productType: any = await this.productTypeRepository.findOne({
         where: { id: id },
       });
-      console.log('productType', id, productType);
       const types: any = await this.productTypeRepository.findAll({
         where: { parentId: id },
-        // include: { all: true },
       });
-      console.log(productType);
-      this.fileService.removeFile(productType.picture);
-      const removeProductType = await this.productTypeRepository.destroy({
-        where: { id: id },
-      });
-
-      // await productType.destroy();
-      types.forEach((element) => {
-        console.log(element.id, element.name);
-        this.remove(element.id);
-      });
+      await this.fileService.removeFile(productType.picture);
+      await productType.destroy();
+      for (const element of types) {
+        await this.remove(element.id);
+      }
     } catch (error) {
       console.log('ERROR', error);
     }
