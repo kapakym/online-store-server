@@ -19,7 +19,7 @@ export class TemplateContorller {
   @ApiOperation({ summary: 'Создание свойств' })
   @ApiResponse({ status: 200, type: CreateTemplatePropertysDto })
   @Post('/property')
-  cretaeProperty(@Body() dto: CreateTemplatePropertysDto) {
+  createProperty(@Body() dto: CreateTemplatePropertysDto) {
     return this.templateService.createProperty(dto);
   }
 
