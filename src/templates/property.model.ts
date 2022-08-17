@@ -1,8 +1,15 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { GetPropertyByPageDto } from './dto/get-property-by-page.dto';
+
+interface PropertyCreationAttrs {
+  name: string;
+  type: string;
+  templateId: number;
+}
 
 @Table({ tableName: 'property' })
-export class Property extends Model<Property> {
+export class Property extends Model<Property, GetPropertyByPageDto> {
   @ApiProperty({ example: '1', description: 'Уникальный индетификатор' })
   @Column({
     type: DataType.INTEGER,
