@@ -4,6 +4,7 @@ import { CreateTemplateDto } from './dto/create-template.dto';
 import { CreateTemplatePropertysDto } from './dto/create-template-propertys.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetTemplateByPageDto } from './dto/get-template-by-page.dto';
+import { CreateTemplatePropertyDto } from './dto/create-template-property.dto';
 
 @Controller('/template')
 export class TemplateContorller {
@@ -28,6 +29,15 @@ export class TemplateContorller {
   @Get('/page')
   getTemplatesByPage(@Query() dto: GetTemplateByPageDto) {
     return this.templateService.getTemplatesByPage(dto);
+  }
+
+  @ApiOperation({
+    summary: 'Получения определенного количества свойств шаблона',
+  })
+  @ApiResponse({ status: 200, type: CreateTemplatePropertyDto })
+  @Get('/property/page')
+  getPropertyByPage(@Query() dto: CreateTemplatePropertyDto) {
+    return this.templateService.getPropertyByPage(dto);
   }
 
   @Get()
