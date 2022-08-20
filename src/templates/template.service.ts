@@ -1,3 +1,4 @@
+import { CreateTemplatePropertysDto } from './dto/create-template-propertys.dto';
 import { Injectable } from '@nestjs/common';
 import { Template } from './template.model';
 import { InjectModel } from '@nestjs/sequelize';
@@ -24,9 +25,10 @@ export class TemlateService {
     return templates;
   }
 
-  async createProperty(dto: CreateTemplatePropertyDto) {
-    const property = await this.propertyRepository.create(dto);
-    return { message: 'OK' };
+  async createProperty(dto: CreateTemplatePropertysDto) {
+    console.log(dto);
+    // const property = await this.propertyRepository.create(dto);
+    // return property;
   }
 
   async getTemplatesByPage(dto: GetTemplateByPageDto) {

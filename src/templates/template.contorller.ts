@@ -1,5 +1,5 @@
 import { GetPropertyByPageDto } from './dto/get-property-by-page.dto';
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { TemlateService } from './template.service';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { CreateTemplatePropertysDto } from './dto/create-template-propertys.dto';
@@ -19,9 +19,9 @@ export class TemplateContorller {
   }
 
   @ApiOperation({ summary: 'Создание свойств' })
-  @ApiResponse({ status: 200, type: CreateTemplatePropertyDto })
-  @Post('/property')
-  createProperty(@Body() dto: CreateTemplatePropertyDto) {
+  @ApiResponse({ status: 200, type: CreateTemplatePropertysDto })
+  @Put('/property')
+  createProperty(@Body() dto: CreateTemplatePropertysDto) {
     return this.templateService.createProperty(dto);
   }
 
