@@ -6,7 +6,6 @@ import { CreateTemplateDto } from './dto/create-template.dto';
 import { Property } from './property.model';
 import { GetTemplateByPageDto } from './dto/get-template-by-page.dto';
 import { GetPropertyByPageDto } from './dto/get-property-by-page.dto';
-import { CreateTemplatePropertyDto } from './dto/create-template-property.dto';
 
 @Injectable()
 export class TemlateService {
@@ -27,6 +26,26 @@ export class TemlateService {
 
   async createProperty(dto: CreateTemplatePropertysDto) {
     console.log(dto);
+    for (const item of dto.data) {
+      switch (item.exist) {
+        case 'new':
+          await this.propertyRepository.create({
+            templateId: dto.templateId,
+            name: item.name,
+            type: item.type,
+          });
+          break;
+        case 'exist':
+          const property = await this.propertyRepository.findByPk(item.id);
+          property.name = item.name;
+          property.type = item.type;
+          await property.save();
+          break;
+        default: {
+          break;
+        }
+      }
+    }
     // const property = await this.propertyRepository.create(dto);
     // return property;
   }
@@ -46,13 +65,13 @@ export class TemlateService {
     const count = await this.propertyRepository.count({
       where: { templateId: dto.templateId },
     });
-    const templates = await this.propertyRepository.findAll({
+    const propertys = await this.propertyRepository.findAll({
       where: { templateId: dto.templateId },
       include: { all: true },
       limit: dto.limit,
       offset: dto.limit * dto.page,
       order: [['name', 'ASC']],
     });
-    return { templates, count };
+    return { propertys, count };
   }
 }
