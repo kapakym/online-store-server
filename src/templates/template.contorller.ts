@@ -16,6 +16,7 @@ import { GetTemplateByPageDto } from './dto/get-template-by-page.dto';
 import { CreateTemplatePropertyDto } from './dto/create-template-property.dto';
 import { DeletePropertyDto } from './dto/deleteProperty.dto';
 import { DeleteTemplateDto } from './dto/delete-template.dto';
+import { UpdateTemplateDto } from './dto/update-template.dto';
 
 @Controller('/template')
 export class TemplateContorller {
@@ -26,6 +27,13 @@ export class TemplateContorller {
   @Post()
   create(@Body() dto: CreateTemplateDto) {
     return this.templateService.createTemplate(dto);
+  }
+
+  @ApiOperation({ summary: 'Изменение шаблона' })
+  @ApiResponse({ status: 200, type: UpdateTemplateDto })
+  @Put()
+  update(@Body() dto: UpdateTemplateDto) {
+    return this.templateService.updateTemplate(dto);
   }
 
   @ApiOperation({ summary: 'Удаление шаблона' })
