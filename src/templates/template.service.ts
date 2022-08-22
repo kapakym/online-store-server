@@ -8,6 +8,7 @@ import { GetTemplateByPageDto } from './dto/get-template-by-page.dto';
 import { GetPropertyByPageDto } from './dto/get-property-by-page.dto';
 import { DeletePropertyDto } from './dto/deleteProperty.dto';
 import { DeleteTemplateDto } from './dto/delete-template.dto';
+import { UpdateTemplateDto } from './dto/update-template.dto';
 
 @Injectable()
 export class TemlateService {
@@ -90,6 +91,13 @@ export class TemlateService {
       where: { templateId: dto.id },
     });
     for (const property of propertys) await property.destroy();
+    return { message: 'ok' };
+  }
+
+  async updateTemplate(dto: UpdateTemplateDto) {
+    const template = await this.templateRepository.findByPk(dto.id);
+    template.name = dto.name;
+    template.save();
     return { message: 'ok' };
   }
 }
