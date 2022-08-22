@@ -33,9 +33,7 @@ export class BrandService {
   async deleteProductBrand(dto: DeleteProductBrandDto) {
     console.log(dto);
     try {
-      const productBrand: any = await this.productBrandRepo.findOne({
-        where: { id: dto.id },
-      });
+      const productBrand: any = await this.productBrandRepo.findByPk(dto.id);
       const result = await productBrand.destroy();
 
       return { status: 'deleted' };
