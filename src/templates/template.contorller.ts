@@ -1,11 +1,20 @@
 import { GetPropertyByPageDto } from './dto/get-property-by-page.dto';
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { TemlateService } from './template.service';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { CreateTemplatePropertysDto } from './dto/create-template-propertys.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetTemplateByPageDto } from './dto/get-template-by-page.dto';
 import { CreateTemplatePropertyDto } from './dto/create-template-property.dto';
+import { DeletePropertyDto } from './dto/deleteProperty.dto';
 
 @Controller('/template')
 export class TemplateContorller {
@@ -23,6 +32,13 @@ export class TemplateContorller {
   @Put('/property')
   createProperty(@Body() dto: CreateTemplatePropertysDto) {
     return this.templateService.createProperty(dto);
+  }
+
+  @ApiOperation({ summary: 'Удаление свойства' })
+  @ApiResponse({ status: 200, type: DeletePropertyDto })
+  @Delete('/property')
+  deleteProperty(@Query() dto: DeletePropertyDto) {
+    return this.templateService.deleteProperty(dto);
   }
 
   @ApiOperation({ summary: 'Получения определенного количества шаблонов' })
