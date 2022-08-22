@@ -7,6 +7,7 @@ import { Property } from './property.model';
 import { GetTemplateByPageDto } from './dto/get-template-by-page.dto';
 import { GetPropertyByPageDto } from './dto/get-property-by-page.dto';
 import { DeletePropertyDto } from './dto/deleteProperty.dto';
+import { DeleteTemplateDto } from './dto/delete-template.dto';
 
 @Injectable()
 export class TemlateService {
@@ -77,9 +78,18 @@ export class TemlateService {
   }
 
   async deleteProperty(dto: DeletePropertyDto) {
-    console.log('-------------->', dto.id);
     const property = await this.propertyRepository.findByPk(dto.id);
     await property.destroy();
+    return { message: 'ok' };
+  }
+
+  async deleteTemplate(dto: DeleteTemplateDto) {
+    const template = await this.templateRepository.findByPk(dto.id);
+    await template.destroy();
+    const propertys = await this.propertyRepository.findAll({
+      where: { templateId: dto.id },
+    });
+    for (const property of propertys) await property.destroy();
     return { message: 'ok' };
   }
 }
