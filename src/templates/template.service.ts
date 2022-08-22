@@ -6,6 +6,7 @@ import { CreateTemplateDto } from './dto/create-template.dto';
 import { Property } from './property.model';
 import { GetTemplateByPageDto } from './dto/get-template-by-page.dto';
 import { GetPropertyByPageDto } from './dto/get-property-by-page.dto';
+import { DeletePropertyDto } from './dto/deleteProperty.dto';
 
 @Injectable()
 export class TemlateService {
@@ -73,5 +74,12 @@ export class TemlateService {
       order: [['name', 'ASC']],
     });
     return { propertys, count };
+  }
+
+  async deleteProperty(dto: DeletePropertyDto) {
+    console.log('-------------->', dto.id);
+    const property = await this.propertyRepository.findByPk(dto.id);
+    await property.destroy();
+    return { message: 'ok' };
   }
 }
