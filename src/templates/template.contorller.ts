@@ -11,13 +11,14 @@ import {
 import { TemlateService } from './template.service';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { CreateTemplatePropertysDto } from './dto/create-template-propertys.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetTemplateByPageDto } from './dto/get-template-by-page.dto';
 import { CreateTemplatePropertyDto } from './dto/create-template-property.dto';
 import { DeletePropertyDto } from './dto/deleteProperty.dto';
 import { DeleteTemplateDto } from './dto/delete-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
 
+@ApiTags('Шаблоны')
 @Controller('/template')
 export class TemplateContorller {
   constructor(private templateService: TemlateService) {}
@@ -73,6 +74,8 @@ export class TemplateContorller {
     return this.templateService.getPropertyByPage(dto);
   }
 
+  @ApiOperation({ summary: 'Получения всех шаблонов' })
+  @ApiResponse({ status: 200 })
   @Get()
   getAll() {
     return this.templateService.getAllTemplates();
