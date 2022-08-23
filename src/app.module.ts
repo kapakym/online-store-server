@@ -17,6 +17,10 @@ import * as path from 'path';
 import { TemplateModule } from './templates/template.module';
 import { Template } from './templates/template.model';
 import { Brand } from './brand/brand.model';
+import { ProductModule } from './product/product.module';
+import { Product } from './product/product.model';
+import { ProductPicture } from './product/product.picture.model';
+import { ProductInfo } from './product/product.info.model';
 
 @Module({
   controllers: [
@@ -40,7 +44,18 @@ import { Brand } from './brand/brand.model';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles, Brand, Category, TypeBrand, Template],
+      models: [
+        User,
+        Role,
+        UserRoles,
+        Brand,
+        Category,
+        TypeBrand,
+        Template,
+        Product,
+        ProductPicture,
+        ProductInfo,
+      ],
       autoLoadModels: true,
     }),
     UsersModule,
@@ -50,6 +65,7 @@ import { Brand } from './brand/brand.model';
     BrandModule,
     FilesModule,
     TemplateModule,
+    ProductModule,
   ],
 })
 export class AppModule {}
