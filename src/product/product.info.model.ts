@@ -16,6 +16,15 @@ export class ProductInfo extends Model<ProductInfo> {
   id: number;
 
   @ApiProperty({
+    example: '1',
+    description: 'Индетификатор продукта, которому принадлежит данное свойство',
+  })
+  @Column({
+    type: DataType.INTEGER,
+  })
+  productId: number;
+
+  @ApiProperty({
     example: 'строка',
     description: 'Тип свойства [строка, число, ссылка]',
   })
