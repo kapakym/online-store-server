@@ -18,13 +18,13 @@ export class Product extends Model<Product> {
     example: 'Ель',
     description: 'Название товара',
   })
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.STRING, allowNull: false })
   name: string;
   @ApiProperty({
     example: '2000',
     description: 'Цена товара',
   })
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 0 })
   price: number;
   @Column({ type: DataType.INTEGER })
   @ApiProperty({
@@ -32,13 +32,13 @@ export class Product extends Model<Product> {
     description: 'Количество товара на складе',
   })
   count: number;
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 0 })
   @ApiProperty({
     example: '11',
     description: 'Идентификатор производителя товара',
   })
   brandId: number;
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 1 })
   @ApiProperty({
     example: '11',
     description: 'Индентификатор категории товара',
@@ -48,6 +48,6 @@ export class Product extends Model<Product> {
     example: '123221',
     description: 'Штрихкод товара',
   })
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.STRING })
   barcode: string;
 }
