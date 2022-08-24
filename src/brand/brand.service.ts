@@ -21,6 +21,7 @@ export class BrandService {
       ...dto,
       picture: filename,
     });
+    console.log('------------------------>', dto);
     return productBrand;
   }
 
