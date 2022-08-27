@@ -20,14 +20,29 @@ export class ProductService {
   ) {}
 
   async getProductByPage(dto: GetProductByPageDto) {
-    const count = await this.propertyRepository.count();
-    const templates = await this.productRepository.findAll({
+    const count = await this.productRepository.count();
+    const data = [];
+
+    const products = await this.productRepository.findAll({
       include: { all: true },
       limit: dto.limit,
-      offset: dto.limit * dto.page,
+      offset: dto.limit * (dto.page - 1),
       order: [['name', 'ASC']],
     });
-    return { templates, count };
+    console.log('====================>', dto, count);
+    for (const product of products) {
+      const photos = await this.productPictureRepository.findAll({
+        where: { productId: product.id },
+        attributes: ['filename'],
+      });
+      const productJSON = product.toJSON();
+      productJSON['photos'] = [];
+      for (const item of photos) {
+        productJSON['photos'].push(item.filename);
+      }
+      data.push(productJSON);
+    }
+    return { data, count };
   }
 
   async createProduct(dto: CreateProductDto, photo: any) {
