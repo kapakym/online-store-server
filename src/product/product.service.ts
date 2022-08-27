@@ -64,6 +64,7 @@ export class ProductService {
         productId: product.id,
         name: item.name,
         type: item.type,
+        templateId: dto.templateId,
       });
     }
 
