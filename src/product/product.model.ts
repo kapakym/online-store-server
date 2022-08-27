@@ -50,4 +50,10 @@ export class Product extends Model<Product> {
   })
   @Column({ type: DataType.STRING })
   barcode: string;
+  @ApiProperty({
+    example: '1',
+    description: 'ID шаблона',
+  })
+  @Column({ type: DataType.INTEGER })
+  templateId: number;
 }
