@@ -48,4 +48,12 @@ export class ProductInfo extends Model<ProductInfo> {
     type: DataType.STRING,
   })
   value: string;
+  @ApiProperty({
+    example: '100',
+    description: 'ID шаблона',
+  })
+  @Column({
+    type: DataType.INTEGER,
+  })
+  templateId: number;
 }
