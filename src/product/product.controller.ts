@@ -12,6 +12,7 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { GetProductByPageDto } from './dto/get-product-by-page.dto';
+import { GetProductInfoByPageDto } from './dto/get-product-info-by-page.dto';
 
 @Controller('product')
 export class ProductController {
@@ -31,5 +32,14 @@ export class ProductController {
   @Get('/page')
   getProductByPage(@Query() dto: GetProductByPageDto) {
     return this.productService.getProductByPage(dto);
+  }
+
+  @ApiOperation({
+    summary: 'Получение опредленного количества свойств продукта',
+  })
+  @ApiResponse({ status: 200, type: GetProductInfoByPageDto })
+  @Get('/info/page')
+  getProductPropertyByPage(@Query() dto: GetProductInfoByPageDto) {
+    return this.productService.getProductInfoByPage(dto);
   }
 }
