@@ -7,6 +7,7 @@ import { FilesService } from '../files/files.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Property } from '../templates/property.model';
 import { GetProductByPageDto } from './dto/get-product-by-page.dto';
+import { GetProductInfoByPageDto } from './dto/get-product-info-by-page.dto';
 
 @Injectable()
 export class ProductService {
@@ -69,5 +70,20 @@ export class ProductService {
     }
 
     // for (const item in photo) console.log(item.name);
+  }
+
+  async getProductInfoByPage(dto: GetProductInfoByPageDto) {
+    const count = await this.productInfoRepository.count({
+      where: { productId: dto.productId },
+    });
+    const productInfo = await this.productInfoRepository.findAll({
+      where: { productId: dto.productId },
+      include: { all: true },
+      limit: dto.limit,
+      offset: dto.limit * (dto.page - 1),
+      order: [['name', 'ASC']],
+    });
+
+    return { productInfo, count };
   }
 }
