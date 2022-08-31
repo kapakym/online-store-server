@@ -8,6 +8,9 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { Property } from '../templates/property.model';
 import { GetProductByPageDto } from './dto/get-product-by-page.dto';
 import { GetProductInfoByPageDto } from './dto/get-product-info-by-page.dto';
+import { ChangeTemplateProductDto } from './dto/change-template-product.dto';
+import { ChangeInfoProductDto } from './dto/change-info-product.dto';
+import { ChangeProductDto } from './dto/change-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -56,19 +59,7 @@ export class ProductService {
         filename: filename,
       });
     }
-    const propertys = await this.propertyRepository.findAll({
-      where: { templateId: dto.templateId },
-    });
-    for (const item of propertys) {
-      console.log('item----->', item.name);
-      const newInfo = await this.productInfoRepository.create({
-        productId: product.id,
-        name: item.name,
-        type: item.type,
-        templateId: dto.templateId,
-      });
-    }
-
+    await this.createProductInfos(dto.templateId, product.id);
     // for (const item in photo) console.log(item.name);
   }
 
@@ -85,5 +76,53 @@ export class ProductService {
     });
 
     return { productInfo, count };
+  }
+
+  async changeTemplateProduct(dto: ChangeTemplateProductDto) {
+    const result = await this.productInfoRepository.destroy({
+      where: { productId: dto.productId },
+    });
+    const product = await this.productRepository.findByPk(dto.productId);
+    product.templateId = dto.templateId;
+    await product.save();
+    await this.createProductInfos(dto.templateId, dto.productId);
+  }
+
+  async createProductInfos(templateId, productId) {
+    const propertys = await this.propertyRepository.findAll({
+      where: { templateId: templateId },
+    });
+    for (const item of propertys) {
+      console.log('item----->', item.name);
+      const newInfo = await this.productInfoRepository.create({
+        productId: productId,
+        name: item.name,
+        type: item.type,
+        templateId: templateId,
+      });
+    }
+  }
+
+  async changeInfoProduct(dto: ChangeInfoProductDto) {
+    for (const item of dto.info) {
+      const info: ProductInfo = await this.productInfoRepository.findByPk(
+        item.id,
+      );
+      info.value = item.value;
+      await info.save();
+    }
+  }
+
+  async changeProduct(dto: ChangeProductDto) {
+    const product: Product = await this.productRepository.findByPk(
+      dto.product.id,
+    );
+    product.name = dto.product.name;
+    product.count = dto.product.count;
+    product.price = dto.product.price;
+    product.categoryId = dto.product.categoryId;
+    product.brandId = dto.product.brandId;
+    product.barcode = dto.product.barcode;
+    await product.save();
   }
 }
