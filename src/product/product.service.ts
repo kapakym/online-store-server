@@ -12,6 +12,9 @@ import { ChangeTemplateProductDto } from './dto/change-template-product.dto';
 import { ChangeInfoProductDto } from './dto/change-info-product.dto';
 import { ChangeProductDto } from './dto/change-product.dto';
 import { DeleteProductDto } from './dto/delete-product.dto';
+import { GetProductPhotosDto } from './dto/get-product-photos.dto';
+import { DeleteProductPhotoDto } from './dto/delete-product-photo.dto';
+import { CreateProductPhotosDto } from './dto/create-product-photos.dto';
 
 @Injectable()
 export class ProductService {
@@ -62,6 +65,17 @@ export class ProductService {
     }
     await this.createProductInfos(dto.templateId, product.id);
     // for (const item in photo) console.log(item.name);
+  }
+
+  async createProductPhoto(dto: CreateProductPhotosDto, photo: any) {
+    for (const item of photo) {
+      const filename = await this.fileService.createFile(item);
+      console.log(filename);
+      const newPhoto = await this.productPictureRepository.create({
+        productId: dto.productId,
+        filename: filename,
+      });
+    }
   }
 
   async getProductInfoByPage(dto: GetProductInfoByPageDto) {
@@ -142,5 +156,22 @@ export class ProductService {
       await photo.destroy();
     }
     await product.destroy();
+  }
+
+  async getProductPhotos(dto: GetProductPhotosDto) {
+    const photos = await this.productPictureRepository.findAll({
+      where: { productId: dto.productId },
+    });
+    const result = [];
+    for (const photo of photos) result.push(photo.filename);
+
+    return result;
+  }
+
+  async deleteProductPhoto(dto: DeleteProductPhotoDto) {
+    await this.fileService.removeFile(dto.filename);
+    await this.productPictureRepository.destroy({
+      where: { filename: dto.filename },
+    });
   }
 }
