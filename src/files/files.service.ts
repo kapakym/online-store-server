@@ -12,7 +12,7 @@ export class FilesService {
     try {
       const filePath = path.resolve(__dirname, '..', 'static', filename);
       if (fs.existsSync(filePath)) {
-        console.log(filePath);
+        console.log('------------->', filePath);
         fs.rm(filePath, () => {});
         return filePath;
       }
