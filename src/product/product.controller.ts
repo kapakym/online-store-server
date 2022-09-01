@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Put,
@@ -17,6 +18,7 @@ import { GetProductInfoByPageDto } from './dto/get-product-info-by-page.dto';
 import { ChangeTemplateProductDto } from './dto/change-template-product.dto';
 import { ChangeInfoProductDto } from './dto/change-info-product.dto';
 import { ChangeProductDto } from './dto/change-product.dto';
+import { DeleteProductDto } from './dto/delete-product.dto';
 
 @Controller('product')
 export class ProductController {
@@ -57,6 +59,13 @@ export class ProductController {
   @Get('/page')
   getProductByPage(@Query() dto: GetProductByPageDto) {
     return this.productService.getProductByPage(dto);
+  }
+
+  @ApiOperation({ summary: 'Удаление опредленного продукта' })
+  @ApiResponse({ status: 200, type: DeleteProductDto })
+  @Delete()
+  deleteProduct(@Query() dto: DeleteProductDto) {
+    return this.productService.deleteProduct(dto);
   }
 
   @ApiOperation({
