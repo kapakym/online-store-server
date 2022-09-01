@@ -11,6 +11,7 @@ import { GetProductInfoByPageDto } from './dto/get-product-info-by-page.dto';
 import { ChangeTemplateProductDto } from './dto/change-template-product.dto';
 import { ChangeInfoProductDto } from './dto/change-info-product.dto';
 import { ChangeProductDto } from './dto/change-product.dto';
+import { DeleteProductDto } from './dto/delete-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -124,5 +125,22 @@ export class ProductService {
     product.brandId = dto.product.brandId;
     product.barcode = dto.product.barcode;
     await product.save();
+  }
+
+  async deleteProduct(dto: DeleteProductDto) {
+    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=->>>>>>', dto);
+    const product: Product = await this.productRepository.findByPk(dto.id);
+    await this.productInfoRepository.destroy({
+      where: { productId: product.id },
+    });
+    const photos: ProductPicture[] =
+      await this.productPictureRepository.findAll({
+        where: { productId: product.id },
+      });
+    for (const photo of photos) {
+      await this.fileService.removeFile(photo.filename);
+      await photo.destroy();
+    }
+    await product.destroy();
   }
 }
