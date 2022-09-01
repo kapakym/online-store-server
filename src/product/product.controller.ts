@@ -19,6 +19,9 @@ import { ChangeTemplateProductDto } from './dto/change-template-product.dto';
 import { ChangeInfoProductDto } from './dto/change-info-product.dto';
 import { ChangeProductDto } from './dto/change-product.dto';
 import { DeleteProductDto } from './dto/delete-product.dto';
+import { DeleteProductPhotoDto } from './dto/delete-product-photo.dto';
+import { GetProductPhotosDto } from './dto/get-product-photos.dto';
+import { CreateProductPhotosDto } from './dto/create-product-photos.dto';
 
 @Controller('product')
 export class ProductController {
@@ -31,6 +34,14 @@ export class ProductController {
   create(@Body() dto: any, @UploadedFiles() photo) {
     console.log(dto, photo.length);
     return this.productService.createProduct(dto, photo);
+  }
+
+  @ApiOperation({ summary: 'Добавление фотографий продукта' })
+  @ApiResponse({ status: 200, type: CreateProductPhotosDto })
+  @Post('photo')
+  @UseInterceptors(FilesInterceptor('photo'))
+  Photos(@Body() dto: any, @UploadedFiles() photo) {
+    return this.productService.createProductPhoto(dto, photo);
   }
 
   @ApiOperation({ summary: 'Изменение используемого шаблона у продукта' })
@@ -55,6 +66,13 @@ export class ProductController {
   }
 
   @ApiOperation({ summary: 'Получение опредленного количества продуктов' })
+  @ApiResponse({ status: 200, type: GetProductPhotosDto })
+  @Get('/photo')
+  getProductPhotos(@Query() dto: GetProductPhotosDto) {
+    return this.productService.getProductPhotos(dto);
+  }
+
+  @ApiOperation({ summary: 'Получение опредленного количества продуктов' })
   @ApiResponse({ status: 200, type: GetProductByPageDto })
   @Get('/page')
   getProductByPage(@Query() dto: GetProductByPageDto) {
@@ -62,6 +80,13 @@ export class ProductController {
   }
 
   @ApiOperation({ summary: 'Удаление опредленного продукта' })
+  @ApiResponse({ status: 200, type: DeleteProductPhotoDto })
+  @Delete('photo')
+  deleteProductPhoto(@Query() dto: DeleteProductPhotoDto) {
+    return this.productService.deleteProductPhoto(dto);
+  }
+
+  @ApiOperation({ summary: 'Удаление фото продукта' })
   @ApiResponse({ status: 200, type: DeleteProductDto })
   @Delete()
   deleteProduct(@Query() dto: DeleteProductDto) {
